@@ -79,7 +79,7 @@ issueList.FilterView = Backbone.View.extend({
   events: {
     'click .js-filter-button': 'toggleFilter'
   },
-  _filterRegex: /(stage=(?:new|needscontact|needsdiagnosis|contactready|sitewait|closed))/ig,
+  _filterRegex: /(stage=(?:new|status-needscontact|status-needsdiagnosis|status-contactready|status-sitewait|status-closed))/ig,
   _isLoggedIn: $('body').data('username'),
   _userName: $('body').data('username'),
   initialize: function() {
@@ -303,7 +303,7 @@ issueList.IssueView = Backbone.View.extend({
   events: {
     'click .js-issue-label': 'labelSearch',
   },
-  _filterRegex: /&*stage=(new|needscontact|needsdiagnosis|contactready|sitewait|closed)&*/i,
+  _filterRegex: /&*stage=(new|status-needscontact|status-needsdiagnosis|status-contactready|status-sitewait|status-closed)&*/i,
   _isLoggedIn: $('body').data('username'),
   _loadingIndicator: $('.js-loader'),
   initialize: function() {

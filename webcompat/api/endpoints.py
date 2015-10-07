@@ -16,11 +16,11 @@ from flask import g
 from flask import request
 from flask import session
 
-
 from webcompat import app
 from webcompat import cache
 from webcompat import github
 from webcompat import limiter
+from webcompat.helpers import api_mock
 from webcompat.helpers import get_comment_data
 from webcompat.helpers import get_headers
 from webcompat.helpers import get_request_headers
@@ -252,8 +252,8 @@ def modify_labels(number):
         print('GitHubError: ', e.response.status_code)
         return (':(', e.response.status_code)
 
-
 @api.route('/issues/labels')
+@api_mock('repo-labels.json', None)
 @cache.cached(timeout=600)
 def get_repo_labels():
     '''XHR endpoint to get all possible labels in a repo.

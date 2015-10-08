@@ -138,6 +138,12 @@ def get_issue_category(issue_category):
     return (issues.content, issues.status_code, get_headers(issues))
 
 
+@api.route('/issues/category/new')
+@api_mock(None, 'category-new.json')
+def get_new_issues():
+    return get_issue_category('new')
+
+
 @api.route('/issues/search')
 @limiter.limit('30/minute',
                key_func=lambda: session.get('username', 'proxy-user'))

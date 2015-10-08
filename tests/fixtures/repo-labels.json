@@ -1,6 +1,6 @@
-/* Hello from not GitHub. c( ⁰ 〰 ⁰ )੭ */
 [
   {
+    "_comment": "this comes from a test fixture file, not the GitHub.",
     "url": "https://api.github.com/repos/webcompat/webcompat-tests/labels/status-bug",
     "name": "status-bug",
     "color": "fc2929"

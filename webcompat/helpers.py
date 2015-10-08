@@ -23,7 +23,9 @@ from webcompat import github
 HOST_WHITELIST = ('webcompat.com', 'staging.webcompat.com',
                   '127.0.0.1', 'localhost')
 JSON_MIME = 'application/json'
+FIXTURES_PATH = os.getcwd() +'/tests/fixtures'
 STATIC_PATH = os.getcwd() + '/webcompat/static'
+
 cache_dict = {}
 
 

@@ -14,6 +14,7 @@ import urlparse
 from babel.dates import format_timedelta
 from flask import g
 from flask import session
+from functools import wraps
 from ua_parser import user_agent_parser
 
 from webcompat import app
@@ -317,11 +318,9 @@ def api_mock(auth_response, non_auth_response):
     This allows us to send back fixture files when in TESTING mode, rather
     than making API requests over the network. See /api/endponts.py
     for usage.'''
-    # These file paths are relative to helpers.py
-    FIXTURES_PATH = os.path.join(os.path.dirname(__file__), os.pardir,
-                                 'tests/fixtures')
 
     def wrap(func):
+        @wraps(func)
         def wrapped_func(*args, **kwargs):
             if app.config['TESTING']:
                 if g.user and auth_response is not None:

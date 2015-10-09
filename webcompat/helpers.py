@@ -13,7 +13,9 @@ import urlparse
 
 from babel.dates import format_timedelta
 from flask import g
+from flask import request
 from flask import session
+from flask import send_from_directory
 from functools import wraps
 from ua_parser import user_agent_parser
 
@@ -314,23 +316,16 @@ def get_comment_data(request_data):
     return json.dumps({"body": comment_data['rawBody']})
 
 
-def api_mock(auth_response, non_auth_response):
-    '''Decorator factory for mocking out API reponses
+def mockable_response(func):
+    '''Decorator for mocking out API reponses
 
     This allows us to send back fixture files when in TESTING mode, rather
     than making API requests over the network. See /api/endponts.py
     for usage.'''
-
-    def wrap(func):
-        @wraps(func)
-        def wrapped_func(*args, **kwargs):
-            if app.config['TESTING']:
-                if g.user and auth_response is not None:
-                    file = open(os.path.join(FIXTURES_PATH, auth_response))
-                    return file.read()
-                elif non_auth_response is not None:
-                    file = open(os.path.join(FIXTURES_PATH, non_auth_response))
-                    return file.read()
-            return func(*args, **kwargs)
-        return wrapped_func
-    return wrap
+    @wraps(func)
+    def wrapped_func(*args, **kwargs):
+        if app.config['TESTING']:
+            with open(FIXTURES_PATH + request.path + '.json', 'r') as f:
+                return f.read()
+        return func(*args, **kwargs)
+    return wrapped_func
